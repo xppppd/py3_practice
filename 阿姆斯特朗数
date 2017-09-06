@@ -1,0 +1,40 @@
+# 计算一个数的各位数的长度次方和
+def cumulative(x):
+    digits = len(str(x))
+    acc = 0
+    while x:
+        i = x % 10
+        acc += i ** digits
+        x = x // 10
+    return acc
+
+
+# 判断一个数是否为阿姆斯特朗数
+def amstl(x):
+    if x == cumulative(x):
+        return x
+    else:
+        return 0
+
+
+# 先向左递减查找阿姆斯特朗数，记录步数，然后向右查找相同步数，如果向右查找存在阿姆斯特朗数则取右侧的数
+def nearest_amstl(x):
+    nearest = x
+    step = -1
+    for i in range(x, 0, -1):
+        step += 1
+        if amstl(i):
+            nearest = i
+            break
+    for i in range(x, x + step):
+        if amstl(i):
+            nearest = i
+            break
+    print('距离',x,'最近的阿姆斯特朗数为',nearest)
+
+
+x = int(input('请输入一个数字：'))
+if (x < 0):
+    print('请输入一个大于0的数！')
+else:
+    nearest_amstl(x)
